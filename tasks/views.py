@@ -1,6 +1,6 @@
 # from django.shortcuts import render
 from django.views.generic.edit import CreateView
-# from django.views.generic import ListView
+from django.views.generic import ListView
 from tasks.models import Task
 # from projects.models import Project
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -19,11 +19,18 @@ class TasksCreateView(LoginRequiredMixin, CreateView):
         return reverse_lazy("show_project", args=[self.object.id])
 
 
-# ---------------------------------------------------------
-# class ProjectCreateView(LoginRequiredMixin, CreateView):
-#     model = Project
-#     template_name = "projects/create.html"
-#     fields = ["name", "description", "members"]
+class TasksListView(LoginRequiredMixin, ListView):
+    model = Task
+    template_name = "tasks/list.html"
+    context_object_name = "tasks_list"
 
-#     def get_success_url(self):
-#         return reverse_lazy("show_project", args=[self.object.id])
+    def get_queryset(self):
+        return Task.objects.filter(assignee=self.request.user)
+
+# class ProjectListView(LoginRequiredMixin, ListView):
+#     model = Project
+#     template_name = "project_list.html"
+#     context_object_name = "projects_list"
+
+#     def get_queryset(self):
+#         return Project.objects.filter(members=self.request.user)
