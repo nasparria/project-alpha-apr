@@ -1,5 +1,5 @@
 # from django.shortcuts import render
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import ListView
 from tasks.models import Task
 # from projects.models import Project
@@ -27,6 +27,20 @@ class TasksListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Task.objects.filter(assignee=self.request.user)
 
+
+class TasksUpdateView(LoginRequiredMixin, UpdateView):
+    model = Task
+    template_name = "tasks/edit.html"
+    context_object_name = "tasks_edit"
+    fields = ["is_completed"]
+    success_url = reverse_lazy("show_my_tasks")
+
+    # def get_success_url(self):
+    #     return reverse_lazy("show_my_tasks", args=[self.object.id])
+
+
+
+# ------------------------------------------------------
 # class ProjectListView(LoginRequiredMixin, ListView):
 #     model = Project
 #     template_name = "project_list.html"
