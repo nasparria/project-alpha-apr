@@ -5,6 +5,8 @@ from projects.models import Project
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.detail import DetailView
 from tasks.models import Task
+from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView
 # Create your views here.
 
 
@@ -24,3 +26,12 @@ class ProjectDetailView(LoginRequiredMixin, DetailView):
 
     def get_queryset(self):
         return Project.objects.filter(id=self.kwargs['pk'])
+
+
+class ProjectCreateView(LoginRequiredMixin, CreateView):
+    model = Project
+    template_name = "projects/create.html"
+    fields = ["name", "description", "members"]
+
+    def get_success_url(self):
+        return reverse_lazy("show_project", args=[self.object.id])
