@@ -16,12 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, reverse_lazy
 from django.views.generic.base import RedirectView
+
 # from django.views.generic.base import RedirectView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('projects/', include('projects.urls')),
-    path('', RedirectView.as_view(url=reverse_lazy('list_projects')), name="home"),
-    path('accounts/', include('accounts.urls')),
-    path('tasks/', include('tasks.urls')),
+    path("admin/", admin.site.urls),
+    path("projects/", include("projects.urls")),
+    path(
+        "",
+        RedirectView.as_view(url=reverse_lazy("list_projects")),
+        name="home",
+    ),
+    path("accounts/", include("accounts.urls")),
+    path("tasks/", include("tasks.urls")),
 ]

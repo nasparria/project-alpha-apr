@@ -2,8 +2,10 @@
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import ListView
 from tasks.models import Task
+
 # from projects.models import Project
 from django.contrib.auth.mixins import LoginRequiredMixin
+
 # from django.views.generic.detail import DetailView
 from django.urls import reverse_lazy
 
@@ -37,7 +39,6 @@ class TasksUpdateView(LoginRequiredMixin, UpdateView):
 
     # def get_success_url(self):
     #     return reverse_lazy("show_my_tasks", args=[self.object.id])
-
 
 
 # ------------------------------------------------------
